@@ -1,3 +1,3 @@
-module github.com/m4nsur/snipURL
+module github.com/M4nsur/snipURL
 
 go 1.25.3
