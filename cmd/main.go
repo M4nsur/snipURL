@@ -4,17 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
-	config "github.com/M4nsur/snipURL/configs"
+	"github.com/M4nsur/snipURL/internal/auth"
 )
 
-func hello(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("Hello")
-}
-
 func main() {
-	conf := config.LoadConfig()
+	// conf := config.LoadConfig()
 	router := http.NewServeMux()
-	router.HandleFunc("/hello", hello)
+	auth.NewAuthHandler(router)
 	server := http.Server{
 		Addr: ":8081",
 		Handler: router,
