@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	config "github.com/M4nsur/snipURL/configs"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
@@ -10,6 +12,7 @@ func hello(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	conf := config.LoadConfig()
 	router := http.NewServeMux()
 	router.HandleFunc("/hello", hello)
 	server := http.Server{
