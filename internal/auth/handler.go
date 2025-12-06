@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	config "github.com/M4nsur/snipURL/configs"
+	"github.com/M4nsur/snipURL/pkg/response"
 )
 type AuthDeps struct { 
 	*config.Config
@@ -20,6 +21,10 @@ func NewAuthHandler(router *http.ServeMux, conf *config.Config) {
 func (handler *AuthHandler) Register() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Println("register its work")
+		res := LoginResponse{
+			Token: "123",
+		}
+		response.JSON(w, res, 200)
 	}
 }
 
