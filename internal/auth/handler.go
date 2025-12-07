@@ -1,13 +1,11 @@
 package auth
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
 
 	config "github.com/M4nsur/snipURL/configs"
+	"github.com/M4nsur/snipURL/pkg/request"
 	"github.com/M4nsur/snipURL/pkg/response"
-	"github.com/go-playground/validator"
 )
 type AuthDeps struct { 
 	*config.Config
@@ -22,26 +20,23 @@ func NewAuthHandler(router *http.ServeMux, conf *config.Config) {
 
 func (handler *AuthHandler) Register() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Println("register its work")
-
+		_, err := request.HandleBody[RegisterRequest](w, r)
+		if err != nil {
+			return
+		}
+		res := AuthResponse{Token: "123",
+		}
+		response.JSON(w, res, 200)
 	}
 }
 
 func (handler *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var payload LoginRequest
-		err := json.NewDecoder(r.Body).Decode(&payload)
+		_, err := request.HandleBody[LoginRequest](w, r)
 		if err != nil {
-			response.JSON(w, err.Error(), 400)
-			return 
-		}
-		validate := validator.New()
-		errValidate := validate.Struct(payload)
-		if errValidate != nil {
-			response.JSON(w, errValidate.Error(), 400)
 			return
-		}  
-		res := LoginResponse{Token: "123",
+		}
+		res := AuthResponse{Token: "123",
 		}
 		response.JSON(w, res, 200)
 	}
