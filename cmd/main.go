@@ -4,20 +4,32 @@ import (
 	"fmt"
 	"net/http"
 
-	config "github.com/M4nsur/snipURL/configs"
-	"github.com/M4nsur/snipURL/internal/auth"
-	"github.com/M4nsur/snipURL/pkg/db"
+	"github.com/gorilla/mux"
 )
 
+
+func testHttp(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("its work")
+}
+
+
 func main() {
-	conf := config.LoadConfig()
-	_ = db.NewDb(conf)
-	router := http.NewServeMux()
-	auth.NewAuthHandler(router, conf)
+
+	
+
+	fmt.Println("starting serv")
+	router := mux.NewRouter()
+
+	router.Path("/").Methods("GET").HandlerFunc(testHttp)
+	
 	server := http.Server{
-		Addr: ":8081",
+		Addr: ":9090",
 		Handler: router,
 	}
-	fmt.Println("server is listening on port 8081")
-	server.ListenAndServe()
+
+
+	if err := server.ListenAndServe(); err != nil {
+		fmt.Println(err)
+	}
+		
 }
