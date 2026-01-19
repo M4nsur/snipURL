@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/M4nsur/snipURL/configs"
 	"github.com/gorilla/mux"
 )
 
@@ -15,7 +16,9 @@ func testHttp(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	
+	conf := configs.LoadConfig()
+
+	fmt.Println(conf.Db.DNS)
 
 	fmt.Println("starting serv")
 	router := mux.NewRouter()
