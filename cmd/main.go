@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/M4nsur/snipURL/configs"
 	"github.com/M4nsur/snipURL/internal/auth"
 	"github.com/gorilla/mux"
 )
@@ -12,6 +13,11 @@ import (
 
 
 func main() {
+
+	conf := configs.LoadConfig()
+
+	fmt.Println(conf.Db.DNS)
+
 
 	fmt.Println("starting serv")
 	router := mux.NewRouter()
