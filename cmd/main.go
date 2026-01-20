@@ -4,29 +4,27 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/M4nsur/snipURL/internal/auth"
 	"github.com/gorilla/mux"
 )
 
 
-func testHttp(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("its work")
-}
 
 
 func main() {
 
-	
-
 	fmt.Println("starting serv")
 	router := mux.NewRouter()
 
-	router.Path("/").Methods("GET").HandlerFunc(testHttp)
+	authHandler := auth.NewAuthHandlers()
+
+	router.Path("/auth/login").Methods("POST").HandlerFunc(authHandler.Login)
+	router.Path("/auth/register").Methods("POST").HandlerFunc(authHandler.Register)
 	
 	server := http.Server{
 		Addr: ":9090",
 		Handler: router,
 	}
-
 
 	if err := server.ListenAndServe(); err != nil {
 		fmt.Println(err)
