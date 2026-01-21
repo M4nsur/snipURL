@@ -13,16 +13,14 @@ import (
 
 
 func main() {
-
 	conf := configs.LoadConfig()
 
 	fmt.Println(conf.Db.DNS)
 
-
 	fmt.Println("starting serv")
 	router := mux.NewRouter()
 
-	authHandler := auth.NewAuthHandlers()
+	authHandler := auth.NewAuthHandlers(conf)
 
 	router.Path("/auth/login").Methods("POST").HandlerFunc(authHandler.Login)
 	router.Path("/auth/register").Methods("POST").HandlerFunc(authHandler.Register)

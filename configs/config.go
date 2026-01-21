@@ -9,10 +9,15 @@ import (
 
 type Config struct {
 	Db DbConfig
+	Auth AuthConfig 
 }
 
 type DbConfig struct {
 	DNS string
+}
+
+type AuthConfig struct {
+	Secret string
 }
 
 
@@ -25,6 +30,10 @@ func LoadConfig () *Config {
 	return &Config{
 		Db: DbConfig{
 			DNS: os.Getenv("DSN"),
+			
+		},
+		Auth: AuthConfig{
+			Secret: os.Getenv("TOKEN"),
 		},
 	}
 }
